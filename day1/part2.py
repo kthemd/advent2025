@@ -30,6 +30,7 @@ def main():
 
             # trim the number into the appropriate range again
             dial = dial % 100
+    print(zero_count)
 
 if __name__ == "__main__":
     main()
