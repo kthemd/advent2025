@@ -5,7 +5,6 @@ def main():
     dial = 50
     with open("input") as input:
         for line in input:
-            debug_string = f"{dial:{" "}>2} {line.strip():{" "}>4}"
             operation = line.strip()[0]
             number = int(line.strip()[1:])
 
@@ -31,10 +30,6 @@ def main():
 
             # trim the number into the appropriate range again
             dial = dial % 100
-
-            
-            debug_string += f" -> {dial:{" "}>2} | {zero_count}"
-            print(debug_string)
 
 if __name__ == "__main__":
     main()
