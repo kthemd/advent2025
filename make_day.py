@@ -2,6 +2,7 @@
 import requests
 import sys
 import os
+import datetime
 
     
 def get_input(day, token):
@@ -15,7 +16,7 @@ def get_input(day, token):
         sys.exit(f"/api/alerts response: {r.status_code}: {r.reason} \n{r.content}")
         
 if __name__ == "__main__":
-    day = sys.argv[1]
+    day = datetime.datetime.now().day
     sessionToken = ""
     
     with open("token_info") as f:
@@ -31,10 +32,16 @@ if __name__ == "__main__":
     folder_name = "day"+str(day)
     if not os.path.isdir(folder_name):
         os.mkdir(folder_name)
+    else:
+        print("Directory for day ", day, " exists")
     
-    # place the gathered input into the new folder.
-    os.chdir(folder_name)
-    with open("input", "w") as f:
+    f1 = os.path.join(os.getcwd(), folder_name, "part1.py")
+    f2 = os.path.join(os.getcwd(), folder_name, "part2.py")
+
+    if not os.path.isfile(f1):
+        with open(f1, "w"): pass
+    if not os.path.isfile(f2):
+        with open(f2, "w"): pass
+    
+    with open(os.path.join(os.getcwd(), "day"+str(day), "input"), "w") as f:
         f.write(input_contents)
-    with open("part1.py","w"): pass
-    with open("part2.py","w"): pass
