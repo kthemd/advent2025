@@ -1,4 +1,3 @@
-import timeit
 def get_digit(number, place):
     return number // 10**place % 10
 
@@ -23,10 +22,8 @@ def main():
                         front = (biggest // 10 ** (step + 1)) * (10 ** (step + 1))
                         biggest = front + (val * 10**step)
                         break
-            #print(biggest)
             total += biggest
     print(f"Grand total: {total}")
 
 if __name__ == "__main__":
-    a = timeit.timeit(main, number=100) * 1e3
-    print(round(a, 3)/100, "ms")
+    main()
