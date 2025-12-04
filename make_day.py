@@ -37,11 +37,14 @@ if __name__ == "__main__":
     
     f1 = os.path.join(os.getcwd(), folder_name, "part1.py")
     f2 = os.path.join(os.getcwd(), folder_name, "part2.py")
+    sample = os.path.join(os.getcwd(), folder_name, "sample")
 
     if not os.path.isfile(f1):
         with open(f1, "w"): pass
     if not os.path.isfile(f2):
         with open(f2, "w"): pass
+    if not os.path.isfile(sample):
+        with open(sample, "w"): pass
     
     with open(os.path.join(os.getcwd(), "day"+str(day), "input"), "w") as f:
         f.write(input_contents)
