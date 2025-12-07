@@ -4,14 +4,14 @@ def main():
     lines = []
     operators = []
     total = 0
-    # trim newlines from the strings of numbers, and flip them
-    # (for ease of popping the operator list)
+    # push the strings of numbers to a list, and replace the \n
+    # newline flags with ' ' a space for our iterator later
     with open('input') as f:
         for line in f:
             if "*" in line:
                 operators = line.strip().split()
             else:
-                lines.append(line.strip('\n')[::-1])
+                lines.append(line.replace('\n,', ' '))
     
     # zip the strings of numbers together
     bundled = zip(*lines)
@@ -20,14 +20,10 @@ def main():
     # construct numbers by getting the next character from the zip
     # until we reach a tuple of all empty strings, at which point
     # we can do the math and move on
-    while len(operators) > 0:
-        op = operators.pop()
+    for op in operators:
         numbers = []
         while True:
-            try:
-                number = ''.join(next(bundled))
-            except StopIteration:
-                number = ''
+            number = ''.join(next(bundled))
             if number.strip() == '':
                 break
             numbers.append(int(number))
