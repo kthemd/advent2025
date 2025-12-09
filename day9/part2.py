@@ -48,11 +48,22 @@ def test_intersection(line1, ray):
 
 with open('input') as f:
     points = []
-    # parse the inputs into a list of x,y points
+    # parse the inputs into a list of x,y points. track an index variable 
+    # and a side_length variable to find the biggest edge in our shape,
+    # which is the best candidate to start our search from later.
+    cur_idx = 0
+    biggest_idx = 0
+    biggest_size = 0
     for line in f:
         x, y = line.strip().split(',')
         tup = int(x),int(y)
+        if len(points) > 1:
+            cur_size = abs(points[-1][0] - tup[0]) + abs(points[-1][1] - tup[1])
+            if cur_size > biggest_size:
+                biggest_size = cur_size
+                biggest_idx = cur_idx
         points.append(tup)
+        cur_idx += 1
     
     # combine all x,y points into pairs
     pairs = list(combinations(points, 2))
@@ -72,13 +83,20 @@ with open('input') as f:
         corners = (x1, y1), (x1, y2), (x2, y2), (x2, y1)
 
         # perform line intersections for all lines of the shape
-        for i, point in enumerate(points):
-            prev = points[i-1]
+        # start with the index of the shape's longest line, which
+        # for this puzzle is the most likely point of collision.
+        points_length = len(points)
+        for i in range(points_length):
+            point = points[(i + biggest_idx) % points_length]
+            prev = points[(i + biggest_idx) % points_length - 1]
             line = (point[0], point[1]), (prev[0], prev[1])
+            # if an intersection occurs for any corner, mark it as
+            # invalid and break out to take the next candidate
             for corner in corners:
                 ray = ((cx, cy), corner)
                 if test_intersection(line, ray):
                     intersects = True
+                    break
             if intersects:
                 break
         if not intersects:
